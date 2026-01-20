@@ -55,8 +55,8 @@ Execute all 4 research steps. Use **web search** for up-to-date information. **P
 
 1. **Landscape** — current state of the industry (broad) → company's segment (specific)
 2. **Market Size** — use TAM/SAM/SOM filter:
-   - Show divergence between sources (e.g., "\\$22B to \\$38B depending on scope")
-   - Explain why: "The \\$38B includes wellness apps; the \\$22B clinical diagnostics figure is more relevant for [Company]"
+   - Show divergence between sources ("$22B to $38B depending on scope")
+   - Explain why: "The $38B includes wellness apps; the $22B clinical diagnostics figure is more relevant for [Company]"
    - Your value-add: Define the playing field, don't just recite a number
 3. **Growth Drivers & Barriers** — table format: Driver/Barrier | Impact | So What?
 4. **Disruptive Tech/Regulation** — technologies or laws reshaping the sector (include CMS/RPM codes if relevant)
@@ -230,7 +230,7 @@ Notify user:
 2. **Honest & Unbiased**: Present objective analysis. Don't flatter the candidate or the company — include risks, challenges, and potential red flags.
 3. **Context Chaining**: Each step MUST read prior outputs for coherence.
 4. **Up-to-date**: Research must be current — search for recent news.
-5. **Escape Dollar Signs**: Use `\$` in Markdown to prevent KaTeX rendering.
+5. **Dollar Signs**: Do NOT escape dollar signs ($). Use standard $ for currency to enable easy copy-pasting to Notion.
 6. **Markdown Format**: All outputs use strict Notion-compatible Markdown.
 
 ---
@@ -252,4 +252,4 @@ Notify user:
 Include sources for key claims:
 
 - In tables: Add `Source` column
-- Inline: "Estimated \$50M revenue (Source: TechCrunch 2024)"
+- Inline: "Estimated $50M revenue (Source: TechCrunch 2024)"

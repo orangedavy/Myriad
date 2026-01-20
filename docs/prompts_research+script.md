@@ -11,8 +11,8 @@ Study the Job Description carefully. Conduct a comprehensive web search to analy
 
 1. **Landscape:** Define the current state of the industry (broad) → company's segment (specific).
 2. **Market Size:** Use TAM/SAM/SOM filter:
-   - Show divergence between sources ("\$22B to \$38B depending on scope")
-   - Explain why: "The \$38B includes wellness apps; the \$22B clinical diagnostics figure is more relevant for [Company]"
+   - Show divergence between sources ("$22B to $38B depending on scope")
+   - Explain why: "The $38B includes wellness apps; the $22B clinical diagnostics figure is more relevant for [Company]"
    - Define the playing field, don't just recite a number
 3. **Growth Drivers & Barriers:** What primary factors are fueling growth? What are the major headwinds?
 4. **Disruptive Tech/Regulation:** Identify specific technologies or laws currently reshaping the sector.
