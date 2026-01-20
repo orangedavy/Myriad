@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# macOS
+.DS_Store
+
+# IDE
+*.code-workspace
+
+# Output (all generated content)
+output/
+
+# Personas (contain PII)
+personas/
+!personas/.gitkeep
