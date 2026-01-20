@@ -15,6 +15,17 @@ Prepare tailored interview scripts for initial screen interviews. Requires `/com
 
 ## Workflow Steps
 
+### Step 0: Load Persona
+
+Read current persona from `.current_persona`:
+
+// turbo
+
+```bash
+read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+echo "Using: $PERSONA ($ROLE)"
+```
+
 ### Step 1: Verify Company Research Exists
 
 Ask user for the **Company Name** they want to prepare for.
@@ -24,8 +35,9 @@ Check if research exists:
 // turbo
 
 ```bash
-if [ ! -d "/Volumes/T7-APFS/Myriad/output/company-research/{COMPANY}" ]; then
-  echo "❌ ERROR: Company research not found for {COMPANY}"
+read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+if [ ! -d "/Volumes/T7-APFS/Myriad/output/$PERSONA/company-research/{COMPANY}" ]; then
+  echo "❌ ERROR: Company research not found for {COMPANY} (Persona: $PERSONA)"
   echo "Please run /company-research first."
   exit 1
 fi
@@ -38,17 +50,18 @@ fi
 
 Read all prior research files:
 
-- `output/company-research/{Company}/1_industry.md`
-- `output/company-research/{Company}/2_competitive.md`
-- `output/company-research/{Company}/3_company.md`
-- `output/company-research/{Company}/4_role_analysis.md`
+- `output/{PERSONA}/company-research/{Company}/1_industry.md`
+- `output/{PERSONA}/company-research/{Company}/2_competitive.md`
+- `output/{PERSONA}/company-research/{Company}/3_company.md`
+- `output/{PERSONA}/company-research/{Company}/4_role_analysis.md`
 
 ### Step 3: Create Output Directory
 
 // turbo
 
 ```bash
-mkdir -p "/Volumes/T7-APFS/Myriad/output/screen-prep/{COMPANY}"
+read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+mkdir -p "/Volumes/T7-APFS/Myriad/output/$PERSONA/screen-prep/{COMPANY}"
 ```
 
 ## Script Preparation Phase
@@ -90,16 +103,18 @@ Keep static parts unchanged. Bold all customizations. ~80% fixed, ~20% company-s
 
 #### Why Us Script
 
-**MUST be fully written, not templated.** Three points:
+#### Why Us Script
 
-1. **[Experience]:** Specific experiences relevant to role. Use fixed statements about dialysis project and smart recorder.
+**MUST be fully written, not templated.** Write as a cohesive narrative (no bold labels like "**Experience:**").
 
-2. **[Mission]:** Company mission + personal connection. Include compelling stat if available (e.g., "54M Americans have sleep apnea, 80% undiagnosed").
+1. **[Summary]:** Start with the "Company mission/vision" summary paragraph from `Career_Profile.md` (under "Why do you choose our company?"). Customize the bracketed `[specific example]` with your Hook.
 
-3. **[Challenge]:** Express excitement about learning opportunity. Format:
+2. **[Experience]:** Specific experiences relevant to role. Use fixed statements about dialysis project and smart recorder.
+
+3. **[Mission]:** Company mission + personal connection. Include compelling stat if available (e.g., "54M Americans have sleep apnea, 80% undiagnosed").
+
+4. **[Challenge]:** Express excitement about learning opportunity. Format:
    > What excites me most is the opportunity to blend my experience with a fresh challenge. **[Specific learning area]** promises a refreshing experience. Exploring this new space — helping you solve **[specific problem]** — would allow me to grow with **[company]**.
-
-**Hook:** Write a specific hook (not [HOOK] placeholder). Example: recent news, product announcement, technology breakthrough.
 
 ---
 
@@ -120,7 +135,8 @@ Select 3-4 stories from Career Profile that address JD requirements.
 // turbo
 
 ```bash
-cat > "/Volumes/T7-APFS/Myriad/output/screen-prep/{COMPANY}/scripts.md" << 'EOF'
+read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+cat > "/Volumes/T7-APFS/Myriad/output/$PERSONA/screen-prep/{COMPANY}/scripts.md" << 'EOF'
 {CONTENT}
 EOF
 ```
@@ -269,7 +285,8 @@ JD - {Role Title}
 // turbo
 
 ```bash
-cat > "/Volumes/T7-APFS/Myriad/output/screen-prep/{COMPANY}/{COMPANY}_dossier.md" << 'EOF'
+read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+cat > "/Volumes/T7-APFS/Myriad/output/$PERSONA/screen-prep/{COMPANY}/{COMPANY}_dossier.md" << 'EOF'
 {CONTENT}
 EOF
 ```

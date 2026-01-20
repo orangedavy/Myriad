@@ -72,7 +72,7 @@ Otherwise, default to Manual Review.
 
 **Follow the methodology in `docs/training_reference.md` exactly.**
 
-Extract silently and **save to log file** `output/resume-analysis/{Company}_analysis.md`:
+Extract silently and **save to log file** `output/{PERSONA}/resume-analysis/{Company}_analysis.md`:
 
 1. **Job Metadata**: Role, Company, Location, Seniority, Role Type, Salary
 2. **ATS Keywords**: Prioritized as 🔴 High, 🟠 Medium, 🟢 Low with category labels
@@ -82,7 +82,8 @@ Extract silently and **save to log file** `output/resume-analysis/{Company}_anal
 // turbo
 
 ```bash
-mkdir -p /Volumes/T7-APFS/Myriad/output/resume-analysis
+read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+mkdir -p /Volumes/T7-APFS/Myriad/output/$PERSONA/resume-analysis
 ```
 
 **Do not display to user** — proceed directly to Gap Analysis.

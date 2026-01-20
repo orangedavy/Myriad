@@ -15,9 +15,20 @@ Conduct deep research on a target company to prepare for interviews. This is the
 
 ## Workflow Steps
 
+### Step 0: Load Persona
+
+Read current persona from `.current_persona`:
+
+// turbo
+
+```bash
+read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+echo "Using: $PERSONA ($ROLE)"
+```
+
 ### Step 1: Collect Job Description
 
-Ask the user to provide the job description. They can either:
+Ask the user to providing the job description. They can either:
 
 - Paste it directly in chat
 - Provide a URL to scrape
@@ -30,7 +41,8 @@ Extract **Company Name** and **Role Title** from the JD.
 // turbo
 
 ```bash
-mkdir -p "/Volumes/T7-APFS/Myriad/output/company-research/{COMPANY}"
+read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+mkdir -p "/Volumes/T7-APFS/Myriad/output/$PERSONA/company-research/{COMPANY}"
 ```
 
 ---
@@ -73,7 +85,8 @@ Execute all 4 research steps. Use **web search** for up-to-date information. **P
 // turbo
 
 ```bash
-cat > "/Volumes/T7-APFS/Myriad/output/company-research/{COMPANY}/1_industry.md" << 'EOF'
+read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+cat > "/Volumes/T7-APFS/Myriad/output/$PERSONA/company-research/{COMPANY}/1_industry.md" << 'EOF'
 {CONTENT}
 EOF
 ```
@@ -112,7 +125,8 @@ EOF
 // turbo
 
 ```bash
-cat > "/Volumes/T7-APFS/Myriad/output/company-research/{COMPANY}/2_competitive.md" << 'EOF'
+read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+cat > "/Volumes/T7-APFS/Myriad/output/$PERSONA/company-research/{COMPANY}/2_competitive.md" << 'EOF'
 {CONTENT}
 EOF
 ```
@@ -160,7 +174,8 @@ Research likely interviewers on LinkedIn:
 // turbo
 
 ```bash
-cat > "/Volumes/T7-APFS/Myriad/output/company-research/{COMPANY}/3_company.md" << 'EOF'
+read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+cat > "/Volumes/T7-APFS/Myriad/output/$PERSONA/company-research/{COMPANY}/3_company.md" << 'EOF'
 {CONTENT}
 EOF
 ```
@@ -199,7 +214,8 @@ EOF
 // turbo
 
 ```bash
-cat > "/Volumes/T7-APFS/Myriad/output/company-research/{COMPANY}/4_role_analysis.md" << 'EOF'
+read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+cat > "/Volumes/T7-APFS/Myriad/output/$PERSONA/company-research/{COMPANY}/4_role_analysis.md" << 'EOF'
 {CONTENT}
 EOF
 ```
