@@ -6,5 +6,7 @@
   ],
   "settings": {
     "markdown.preview.scrollPreviewWithEditor": false,
+    "markdown.math.enabled": false,
+    "markdown-preview-enhanced.mathRenderingOption": "None",
   },
 }
