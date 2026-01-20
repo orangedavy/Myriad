@@ -94,27 +94,24 @@ print(preview['sample_content'][:300])
 
 Show preview to user and ask to confirm.
 
-#### Step 3: Parse with LLM
+#### Step 3: Agent Parsing & Validation
 
-// turbo
+**Role:** Resume Parser Agent
 
-```bash
-cd /Volumes/T7-APFS/Myriad && .venv/bin/python -c "
-from backend.extractors import extract_text
-from backend.parser import parse_resume
+1. **Extract Text:** Re-run extraction if needed.
+2. **Parse to JSON:** Use the **ResumeData** schema to parse the text into a valid JSON structure.
+3. **Save JSON:** Write the parsed JSON to `temp_resume.json` in the current directory.
 
-text = extract_text('{FILE_PATH}')
-data = parse_resume(text)
-
-print('✅ Parsed resume:')
-print(f'   Name: {data.contact.name}')
-print(f'   Email: {data.contact.email}')
-print(f'   Work entries: {len(data.work)}')
-print(f'   Projects: {len(data.projects)}')
-print(f'   Education: {len(data.education)}')
-print(f'   Skill categories: {len(data.skills)}')
-"
+```json
+{
+  "contact": { "name": "..." },
+  "work": [ ... ],
+  "..."
+}
 ```
+
+> [!IMPORTANT]
+> Verify that `contact.email` and `contact.name` are present. Only proceed if valid JSON is saved.
 
 #### Step 4: Select Template
 
@@ -129,19 +126,17 @@ Ask user to choose:
 // turbo
 
 ```bash
-cd /Volumes/T7-APFS/Myriad && .venv/bin/python -c "
-import json
-from backend.ingest import ingest_resume
+cd /Volumes/T7-APFS/Myriad && .venv/bin/python -m backend.ingest \
+  --json temp_resume.json \
+  --persona "{PERSONA}" \
+  --role "{ROLE}" \
+  --template "{TEMPLATE}"
+```
 
-result = ingest_resume(
-    file_path='{FILE_PATH}',
-    persona_name='{PERSONA}',
-    role='{ROLE}',
-    template='{TEMPLATE}',
-)
+**Cleanup:**
 
-print(json.dumps(result, indent=2))
-"
+```bash
+rm temp_resume.json
 ```
 
 #### Step 6: Review Output

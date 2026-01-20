@@ -9,6 +9,11 @@ import os
 from pathlib import Path
 from typing import Union
 import yaml
+import json
+import argparse
+import sys
+from .models import ResumeData
+from .generator import generate_typst, compile_pdf, check_page_count
 
 
 # Project root
@@ -34,6 +39,81 @@ def get_current_persona() -> tuple[str, str]:
     return parts[0] if parts else "davy", "pm"
 
 
+def ingest_resume_from_json(
+    json_path: Union[str, Path],
+    persona_name: str,
+    role: str,
+    template: str = "modern"
+) -> dict:
+    """
+    Ingest resume from a JSON file (agent-driven).
+    
+    1. Validates JSON against ResumeData schema
+    2. Enforces existing persona constraints (optional)
+    3. Generates Typst source
+    4. Compiles PDF
+    5. Updates current persona
+    
+    Args:
+        json_path: Path to the JSON file containing parsed resume data
+        persona_name: Name of the persona (e.g. "davy")
+        role: Role identifier (e.g. "pm")
+        template: Template to use
+        
+    Returns:
+        Result dictionary with paths and status
+    """
+    json_path = Path(json_path)
+    if not json_path.exists():
+        raise FileNotFoundError(f"JSON file not found: {json_path}")
+        
+    # 1. Load and Validate Data
+    try:
+        data_dict = json.loads(json_path.read_text())
+        resume_data = ResumeData.from_dict(data_dict)
+    except Exception as e:
+        raise ValueError(f"Invalid resume JSON: {e}")
+        
+    # 2. Setup Persona Directory
+    persona_dir = PERSONAS_DIR / persona_name
+    persona_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Ensure config exists
+    config_path = persona_dir / "config.yaml"
+    if not config_path.exists():
+        config = {
+            "name": resume_data.contact.name,
+            "preferred_name": resume_data.contact.preferred_name or resume_data.contact.name.split()[0],
+            "default_role": role,
+            "has_career_profile": False
+        }
+        with open(config_path, "w") as f:
+            yaml.dump(config, f)
+            
+    # 3. Generate Typst
+    typ_filename = f"{persona_name}_{role}_master_resume.typ"
+    typ_path = persona_dir / typ_filename
+    
+    typ_content = generate_typst(resume_data, template)
+    typ_path.write_text(typ_content)
+    
+    # 4. Compile PDF
+    pdf_path = compile_pdf(typ_path)
+    
+    # 5. Check Pages
+    page_count = check_page_count(pdf_path)
+    
+    # 6. Update Current
+    update_current_persona(persona_name, role)
+    
+    return {
+        "status": "success",
+        "persona": persona_name,
+        "role": role,
+        "typ_file": str(typ_path),
+        "pdf_file": str(pdf_path),
+        "page_count": page_count
+    }
 def list_personas() -> list[dict]:
     """List all available personas and their roles."""
     personas = []
@@ -76,9 +156,27 @@ def list_personas() -> list[dict]:
 
 
 if __name__ == "__main__":
-    print("Available personas:")
-    for p in list_personas():
-        print(f"  - {p['name']} [{', '.join(p['roles'])}]")
+    parser = argparse.ArgumentParser(description="Resume Ingestion Utility")
+    parser.add_argument("--json", help="Path to JSON resume data")
+    parser.add_argument("--persona", help="Persona name")
+    parser.add_argument("--role", help="Role identifier")
+    parser.add_argument("--template", default="modern", help="Resume template")
     
-    current = get_current_persona()
-    print(f"\nCurrent: {current[0]} ({current[1]})")
+    args = parser.parse_args()
+    
+    if args.json and args.persona and args.role:
+        # Ingestion mode
+        try:
+            result = ingest_resume_from_json(args.json, args.persona, args.role, args.template)
+            print(json.dumps(result, indent=2))
+        except Exception as e:
+            print(json.dumps({"status": "error", "message": str(e)}, indent=2))
+            sys.exit(1)
+    else:
+        # List mode (default)
+        print("Available personas:")
+        for p in list_personas():
+            print(f"  - {p['name']} [{', '.join(p['roles'])}]")
+        
+        current = get_current_persona()
+        print(f"\nCurrent: {current[0]} ({current[1]})")

@@ -18,7 +18,7 @@ from .generator import (
 from .monitor import detect_runts, check_page_fill
 
 # Persona management
-from .ingest import list_personas, update_current_persona
+from .ingest import list_personas, update_current_persona, ingest_resume_from_json
 
 __all__ = [
     # Extraction
@@ -35,4 +35,5 @@ __all__ = [
     # Personas
     'list_personas',
     'update_current_persona',
+    'ingest_resume_from_json',
 ]
