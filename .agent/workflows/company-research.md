@@ -22,7 +22,7 @@ Read current persona from `.current_persona`:
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+read PERSONA ROLE < .current_persona
 echo "Using: $PERSONA ($ROLE)"
 ```
 
@@ -41,8 +41,8 @@ Extract **Company Name** and **Role Title** from the JD.
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
-mkdir -p "/Volumes/T7-APFS/Myriad/output/$PERSONA/company-research/{COMPANY}"
+read PERSONA ROLE < .current_persona
+mkdir -p "output/$PERSONA/company-research/{COMPANY}"
 ```
 
 ---
@@ -85,8 +85,8 @@ Execute all 4 research steps. Use **web search** for up-to-date information. **P
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
-cat > "/Volumes/T7-APFS/Myriad/output/$PERSONA/company-research/{COMPANY}/1_industry.md" << 'EOF'
+read PERSONA ROLE < .current_persona
+cat > "output/$PERSONA/company-research/{COMPANY}/1_industry.md" << 'EOF'
 {CONTENT}
 EOF
 ```
@@ -125,8 +125,8 @@ EOF
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
-cat > "/Volumes/T7-APFS/Myriad/output/$PERSONA/company-research/{COMPANY}/2_competitive.md" << 'EOF'
+read PERSONA ROLE < .current_persona
+cat > "output/$PERSONA/company-research/{COMPANY}/2_competitive.md" << 'EOF'
 {CONTENT}
 EOF
 ```
@@ -174,8 +174,8 @@ Research likely interviewers on LinkedIn:
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
-cat > "/Volumes/T7-APFS/Myriad/output/$PERSONA/company-research/{COMPANY}/3_company.md" << 'EOF'
+read PERSONA ROLE < .current_persona
+cat > "output/$PERSONA/company-research/{COMPANY}/3_company.md" << 'EOF'
 {CONTENT}
 EOF
 ```
@@ -198,7 +198,15 @@ EOF
 **Risk:** [gap]
 ```
 
-**ATS Keywords** — Table: Priority | Keyword | Category | ✔/✘
+**ATS Keywords** — Strict Markdown Table. Columns: Priority | Keyword | Category | Match.
+Format for Match column: Use `✔` for match, `✘` for missing.
+Format for Priority column: `🔴 High`, `🟠 Med`, `🟢 Low`.
+
+```markdown
+| Priority | Keyword     | Category | Match |
+| :------- | :---------- | :------- | :---: |
+| 🔴 High  | **keyword** | Skill    |   ✔   |
+```
 
 **Key Requirements** — Top 5 numbered, with business rationale in italics
 
@@ -214,8 +222,8 @@ EOF
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
-cat > "/Volumes/T7-APFS/Myriad/output/$PERSONA/company-research/{COMPANY}/4_role_analysis.md" << 'EOF'
+read PERSONA ROLE < .current_persona
+cat > "output/$PERSONA/company-research/{COMPANY}/4_role_analysis.md" << 'EOF'
 {CONTENT}
 EOF
 ```

@@ -30,7 +30,7 @@ Read current persona from `.current_persona` (set via `/persona-switch`):
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+read PERSONA ROLE < .current_persona
 echo "Using: $PERSONA ($ROLE)"
 ```
 
@@ -39,8 +39,8 @@ echo "Using: $PERSONA ($ROLE)"
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
-if [ ! -f "/Volumes/T7-APFS/Myriad/personas/$PERSONA/${PERSONA}_${ROLE}_master_resume.typ" ]; then
+read PERSONA ROLE < .current_persona
+if [ ! -f "personas/$PERSONA/${PERSONA}_${ROLE}_master_resume.typ" ]; then
   echo "❌ Resume not found. Run /persona-switch to set persona."
   exit 1
 fi
@@ -82,8 +82,8 @@ Extract silently and **save to log file** `output/{PERSONA}/resume-analysis/{Com
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
-mkdir -p /Volumes/T7-APFS/Myriad/output/$PERSONA/resume-analysis
+read PERSONA ROLE < .current_persona
+mkdir -p "output/$PERSONA/resume-analysis"
 ```
 
 **Do not display to user** — proceed directly to Gap Analysis.
@@ -95,7 +95,7 @@ mkdir -p /Volumes/T7-APFS/Myriad/output/$PERSONA/resume-analysis
 Compare extracted requirements against `personas/{PERSONA}/{PERSONA}_{ROLE}_master_resume.typ`:
 
 - **Matched Keywords**: Inline list with backticks
-- **Missing Keywords**: Table with 🔴🟠🟢 priority column and integration suggestion
+- **Missing Keywords**: Table with **4 columns**: `Priority` (Emoji), `Keyword`, `Category`, `Integration`
 - **Alignment Score**: Battery-style with emoji and edit count
 
 Present this analysis to the user — this is the **first output they see**.
@@ -113,9 +113,10 @@ Present this analysis to the user — this is the **first output they see**.
 
 ### ✗ Missing Keywords
 
-|     | Keyword     | Integration |
-| --- | ----------- | ----------- |
-| 🔴  | **keyword** | → Section   |
+| Priority | Keyword     | Category | Integration       |
+| :------- | :---------- | :------- | :---------------- |
+| 🔴       | **keyword** | Industry | → Skills section  |
+| 🟠       | **keyword** | Tool     | → Work exp bullet |
 ```
 
 ### Step 4: Suggest Edits — MANDATORY DIFF FORMAT
@@ -156,7 +157,7 @@ Create a temporary copy, apply edits, export PDF, then delete the temp file.
 // turbo
 
 ```bash
-cd /Volumes/T7-APFS/Myriad
+cd .
 cp personas/{PERSONA}/{PERSONA}_{ROLE}_master_resume.typ personas/{PERSONA}/temp_customized.typ
 ```
 
@@ -191,7 +192,7 @@ Before final compile, verify the resume fits on one page:
 // turbo
 
 ```bash
-cd /Volumes/T7-APFS/Myriad
+cd .
 typst compile personas/{PERSONA}/temp_customized.typ /tmp/resume_check.pdf
 PAGE_COUNT=$(.venv/bin/python -c "import fitz; print(len(fitz.open('/tmp/resume_check.pdf')))")
 if [ "$PAGE_COUNT" -gt 1 ]; then
@@ -211,7 +212,7 @@ After page count check, verify no "runts" (dangling short words) exist.
 // turbo
 
 ```bash
-cd /Volumes/T7-APFS/Myriad
+cd .
 RUNTS=$(.venv/bin/python -c "from backend.monitor import detect_runts; import json; print(json.dumps(detect_runts('/tmp/resume_check.pdf')))")
 if [ "$RUNTS" != "[]" ]; then
   echo "⚠️ Runts detected!"
@@ -235,7 +236,7 @@ fi
 // turbo
 
 ```bash
-cd /Volumes/T7-APFS/Myriad
+cd .
 typst compile personas/{PERSONA}/temp_customized.typ "output/{PERSONA}/resumes/{COMPANY}_{JOBROLE}_{NAME}.pdf"
 ```
 
@@ -244,7 +245,7 @@ typst compile personas/{PERSONA}/temp_customized.typ "output/{PERSONA}/resumes/{
 // turbo
 
 ```bash
-rm /Volumes/T7-APFS/Myriad/personas/{PERSONA}/temp_customized.typ
+rm "personas/{PERSONA}/temp_customized.typ"
 ```
 
 Notify user with confirmation:
@@ -362,10 +363,10 @@ Agent: ## Gap Analysis: Google
 `LLM` · `cross-functional` · `roadmap` · `product management`
 
 ### ✗ Missing Keywords
-| | Keyword | Integration |
-|-|---------|-------------|
-| 🔴 | **TensorFlow** | → Skills section |
-| 🟠 | **technical presentations** | → Samsung bullet 2 |
+| Priority | Keyword | Category | Integration |
+| :--- | :--- | :--- | :--- |
+| 🔴 | **TensorFlow** | Technology | → Skills section |
+| 🟠 | **technical presentations** | Skill | → Samsung bullet 2 |
 
 ### Suggested Edits
 

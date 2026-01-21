@@ -205,12 +205,12 @@ Use the **exact phrasing** from the JD when possible.
 
 ### ✗ Missing Keywords
 
-|     | Keyword      | Integration                 |
-| --- | ------------ | --------------------------- |
-| 🔴  | **keyword1** | → Section, bullet X         |
-| 🟠  | **keyword2** | → Skills section            |
-| 🟠  | ~~keyword3~~ | _too niche, skip_           |
-| 🟢  | ~~keyword4~~ | _credential not held, skip_ |
+| Priority | Keyword      | Category   | Integration                 |
+| :------- | :----------- | :--------- | :-------------------------- |
+| 🔴       | **keyword1** | Industry   | → Section, bullet X         |
+| 🟠       | **keyword2** | Tool       | → Skills section            |
+| 🟠       | ~~keyword3~~ | Niche      | _too niche, skip_           |
+| 🟢       | ~~keyword4~~ | Credential | _credential not held, skip_ |
 ```
 
 ### Alignment Format

@@ -13,7 +13,7 @@ Stored in: `.current_persona` (simple text file with `persona role` format)
 // turbo
 
 ```bash
-cat /Volumes/T7-APFS/Myriad/.current_persona 2>/dev/null || echo "davy pm"
+cat .current_persona 2>/dev/null || echo "davy pm"
 ```
 
 ## Commands
@@ -42,7 +42,7 @@ Available: davy [pm], jane [pm, swe]
 // turbo
 
 ```bash
-echo "{PERSONA} {ROLE}" > /Volumes/T7-APFS/Myriad/.current_persona
+echo "{PERSONA} {ROLE}" > .current_persona
 ```
 
 ### List Available
@@ -50,7 +50,7 @@ echo "{PERSONA} {ROLE}" > /Volumes/T7-APFS/Myriad/.current_persona
 // turbo
 
 ```bash
-for dir in /Volumes/T7-APFS/Myriad/personas/*/; do
+for dir in personas/*/; do
   persona=$(basename "$dir")
   roles=$(ls "$dir"/*.typ 2>/dev/null | sed 's/.*_\([^_]*\)_master_resume.typ/\1/' | tr '\n' ', ' | sed 's/,$//')
   echo "$persona [$roles]"
@@ -78,7 +78,7 @@ Ask the user for:
 // turbo
 
 ```bash
-cd /Volumes/T7-APFS/Myriad && .venv/bin/python -c "
+cd . && .venv/bin/python -c "
 from backend.extractors import extract_text, parse_resume_preview
 
 text = extract_text('{FILE_PATH}')
@@ -126,7 +126,7 @@ Ask user to choose:
 // turbo
 
 ```bash
-cd /Volumes/T7-APFS/Myriad && .venv/bin/python -m backend.ingest \
+cd . && .venv/bin/python -m backend.ingest \
   --json temp_resume.json \
   --persona "{PERSONA}" \
   --role "{ROLE}" \
@@ -152,7 +152,7 @@ If successful, show:
 // turbo
 
 ```bash
-cd /Volumes/T7-APFS/Myriad && .venv/bin/python -c "
+cd . && .venv/bin/python -c "
 from backend.monitor import detect_runts
 runts = detect_runts('personas/{PERSONA}/{PERSONA}_{ROLE}_master_resume.pdf')
 if runts:
@@ -170,7 +170,7 @@ else:
 // turbo
 
 ```bash
-cd /Volumes/T7-APFS/Myriad && .venv/bin/python -c "
+cd . && .venv/bin/python -c "
 from backend.monitor import check_page_fill
 result = check_page_fill('personas/{PERSONA}/{PERSONA}_{ROLE}_master_resume.pdf')
 print(f'Page fill: {result[\"fill_percent\"]}%')
@@ -193,7 +193,7 @@ If page count > 1:
 // turbo
 
 ```bash
-echo "{PERSONA} {ROLE}" > /Volumes/T7-APFS/Myriad/.current_persona
+echo "{PERSONA} {ROLE}" > .current_persona
 echo "✅ Switched to: {PERSONA} ({ROLE})"
 ```
 
@@ -236,7 +236,7 @@ echo "✅ Switched to: $PERSONA ($ROLE)"
 Other workflows read current persona from `.current_persona`:
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+read PERSONA ROLE < .current_persona
 ```
 
 Affected workflows:

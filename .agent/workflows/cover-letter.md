@@ -26,7 +26,7 @@ Read current persona from `.current_persona`:
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+read PERSONA ROLE < .current_persona
 echo "Using: $PERSONA ($ROLE)"
 ```
 
@@ -35,8 +35,8 @@ echo "Using: $PERSONA ($ROLE)"
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
-if [ ! -f "/Volumes/T7-APFS/Myriad/personas/$PERSONA/${PERSONA}_${ROLE}_master_resume.typ" ]; then
+read PERSONA ROLE < .current_persona
+if [ ! -f "personas/$PERSONA/${PERSONA}_${ROLE}_master_resume.typ" ]; then
   echo "❌ Resume not found. Run /persona-switch first."
   exit 1
 fi
@@ -69,8 +69,8 @@ Create directory and write the letter:
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
-mkdir -p /Volumes/T7-APFS/Myriad/output/$PERSONA/letters
+read PERSONA ROLE < .current_persona
+mkdir -p "output/$PERSONA/letters"
 ```
 
 Write to `output/{PERSONA}/letters/{COMPANY}_Cover_Letter.typ` using the template:
@@ -100,8 +100,8 @@ Write to `output/{PERSONA}/letters/{COMPANY}_Cover_Letter.typ` using the templat
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
-cd /Volumes/T7-APFS/Myriad
+read PERSONA ROLE < .current_persona
+cd .
 typst compile --root . "output/$PERSONA/letters/${COMPANY}_Cover_Letter.typ" "output/$PERSONA/letters/${COMPANY}_Cover_Letter.pdf"
 ```
 

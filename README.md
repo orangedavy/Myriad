@@ -142,6 +142,8 @@ Each profile has its own:
 - Career profile (optional, for stories)
 - Output folder for customized resumes
 
+Check out [docs/tips.md](docs/tips.md) for usage tips (Notion compatibility, etc.).
+
 ---
 
 ## 📁 Where Are My Files?

@@ -22,7 +22,7 @@ Read current persona from `.current_persona`:
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
+read PERSONA ROLE < .current_persona
 echo "Using: $PERSONA ($ROLE)"
 ```
 
@@ -35,8 +35,8 @@ Check if research exists:
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
-if [ ! -d "/Volumes/T7-APFS/Myriad/output/$PERSONA/company-research/{COMPANY}" ]; then
+read PERSONA ROLE < .current_persona
+if [ ! -d "output/$PERSONA/company-research/{COMPANY}" ]; then
   echo "❌ ERROR: Company research not found for {COMPANY} (Persona: $PERSONA)"
   echo "Please run /company-research first."
   exit 1
@@ -60,8 +60,8 @@ Read all prior research files:
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
-mkdir -p "/Volumes/T7-APFS/Myriad/output/$PERSONA/screen-prep/{COMPANY}"
+read PERSONA ROLE < .current_persona
+mkdir -p "output/$PERSONA/screen-prep/{COMPANY}"
 ```
 
 ## Script Preparation Phase
@@ -135,8 +135,8 @@ Select 3-4 stories from Career Profile that address JD requirements.
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
-cat > "/Volumes/T7-APFS/Myriad/output/$PERSONA/screen-prep/{COMPANY}/scripts.md" << 'EOF'
+read PERSONA ROLE < .current_persona
+cat > "output/$PERSONA/screen-prep/{COMPANY}/scripts.md" << 'EOF'
 {CONTENT}
 EOF
 ```
@@ -240,7 +240,7 @@ JD - {Role Title}
 [For each confirmed story, create a `<details>` block with full STAR content from Career_Profile.md:]
 
 <details>
-<summary><strong>[Story Title]</strong> — [1-line summary with key metric]</summary>
+<summary><strong>[Story Title]</strong> — [1-line summary]</summary>
 
 ### Overview
 
@@ -285,8 +285,8 @@ JD - {Role Title}
 // turbo
 
 ```bash
-read PERSONA ROLE < /Volumes/T7-APFS/Myriad/.current_persona
-cat > "/Volumes/T7-APFS/Myriad/output/$PERSONA/screen-prep/{COMPANY}/{COMPANY}_dossier.md" << 'EOF'
+read PERSONA ROLE < .current_persona
+cat > "output/$PERSONA/screen-prep/{COMPANY}/{COMPANY}_dossier.md" << 'EOF'
 {CONTENT}
 EOF
 ```
