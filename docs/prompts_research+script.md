@@ -94,14 +94,11 @@ Study the Job Description (JD) and Master Resume (`typst/master_resume.typ`).
 
 ### ATS Keywords
 
-Analyze the Job Description for keywords. Check if they exist in the Master Resume.
-**Format:** Strict Markdown Table.
-
-| Priority | Keyword     | Category            | Match |
-| :------- | :---------- | :------------------ | :---: |
-| 🔴 High  | **keyword** | Industry/Tech/Skill |   ✔   |
-| 🟠 Med   | keyword     | Tool/Methodology    |   ✘   |
-| 🟢 Low   | keyword     | Credential          |   ✔   |
+| Priority | Keyword     | Category            | ✔      |
+| -------- | ----------- | ------------------- | ------ |
+| 🔴 High  | **keyword** | Industry/Tech/Skill | ✔ or ✘ |
+| 🟠 Med   | keyword     | Tool/Methodology    | ✔ or ✘ |
+| 🟢 Low   | keyword     | Credential          | ✔ or ✘ |
 
 ### Key Requirements (Ranked by Importance)
 

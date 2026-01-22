@@ -13,7 +13,7 @@ Stored in: `.current_persona` (simple text file with `persona role` format)
 // turbo
 
 ```bash
-cat .current_persona 2>/dev/null || echo "davy pm"
+cat .current_persona 2>/dev/null || echo "default pm"
 ```
 
 ## Commands
@@ -27,16 +27,15 @@ cat .current_persona 2>/dev/null || echo "davy pm"
 Output:
 
 ```
-Current: davy (pm)
-Available: davy [pm], jane [pm, swe]
+Current: alex (pm)
+Available: alex [pm]
 ```
 
 ### Switch Persona
 
 ```
-/persona-switch davy
-/persona-switch davy pm
-/persona-switch jane swe
+/persona-switch alex
+/persona-switch alex pm
 ```
 
 // turbo
@@ -69,7 +68,7 @@ Triggers the resume ingestion flow using the Python backend.
 
 Ask the user for:
 
-1. **Persona name** (lowercase, alphanumeric) — e.g., "john", "jane"
+1. **Persona name** (lowercase, alphanumeric) — e.g., "alex"
 2. **Role** (lowercase) — e.g., "pm", "swe", "ds"
 3. **Resume file** — Accept PDF, DOCX, or MD
 

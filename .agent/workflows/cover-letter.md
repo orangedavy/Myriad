@@ -15,7 +15,7 @@ Generate a storytelling-focused cover letter that sounds human, not AI-generated
 
 ## Default Persona
 
-Default: `davy` with role `pm` → `personas/davy/davy_pm_master_resume.typ`
+Default: Varies (set via `/persona-switch`)
 
 ## Workflow Steps
 
@@ -73,7 +73,7 @@ read PERSONA ROLE < .current_persona
 mkdir -p "output/$PERSONA/letters"
 ```
 
-Write to `output/{PERSONA}/letters/{COMPANY}_Cover_Letter.typ` using the template:
+Write to `temp_cover_letter.typ` (in root) using the template:
 
 ```typst
 #import "../../../typst/templates/letter.typ": render
@@ -102,7 +102,8 @@ Write to `output/{PERSONA}/letters/{COMPANY}_Cover_Letter.typ` using the templat
 ```bash
 read PERSONA ROLE < .current_persona
 cd .
-typst compile --root . "output/$PERSONA/letters/${COMPANY}_Cover_Letter.typ" "output/$PERSONA/letters/${COMPANY}_Cover_Letter.pdf"
+typst compile --root . "temp_cover_letter.typ" "output/$PERSONA/letters/${COMPANY}_Cover_Letter.pdf"
+rm "temp_cover_letter.typ"
 ```
 
 ### Step 6: Notify User
@@ -135,17 +136,19 @@ typst compile --root . "output/$PERSONA/letters/${COMPANY}_Cover_Letter.typ" "ou
 - Use corporate buzzwords (synergy, leverage, utilize)
 - Repeat bullet points from the resume
 - Sound like every other cover letter
+- Use exaggerating contrasts (e.g., "It's not about X, it's about Y") - just say what it is
 
 **Tone:** Casual enough to be memorable, professional enough to be credible.
 
 ---
 
-## Structure (3-4 Paragraphs)
+## Structure (4-5 Short Paragraphs)
 
-1. **Hook**: A specific moment or belief that connects you to this field/company
-2. **Why This Company**: Show you have done your research. What specifically excites you?
-3. **What You Bring**: Your relevant experience, framed as a story, not a list
-4. **Close**: Forward-looking, genuine enthusiasm
+1. **Hook**: A specific moment or belief (2-3 sentences)
+2. **Connection**: Why this specific mission resonates with you
+3. **Evidence**: Relevant experience #1 (focus on the _approach_, not just results)
+4. **Evidence**: Relevant experience #2 (focus on ecosystem/collaboration)
+5. **Close**: Simple, forward-looking wrap-up
 
 ---
 
@@ -169,8 +172,8 @@ Agent: [Reads resume and career profile silently]
 
 Agent: I'll write a cover letter connecting your dialysis project experience to EnsoData's sleep diagnostics mission.
 
-[Agent creates output/davy/letters/EnsoData_Cover_Letter.typ]
-[Agent compiles PDF]
+[Agent creates temp_cover_letter.typ]
+[Agent compiles PDF and deletes temp file]
 
-Agent: ✅ Cover letter saved: output/davy/letters/EnsoData_Cover_Letter.pdf
+Agent: ✅ Cover letter saved: output/alex/letters/EnsoData_Cover_Letter.pdf
 ```

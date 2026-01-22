@@ -12,7 +12,7 @@ Generate natural, human-sounding answers for short-form job application question
   - Master resume: `{persona}_{role}_master_resume.typ`
   - Career profile: `{persona}_career_profile.md` (optional — story-based answers limited if missing)
 - Company research at `output/{persona}/company-research/{Company}/` (optional but helpful)
-- Default persona: `davy` with role `pm`
+- Default persona: Varies (set via `/persona-switch`)
 
 ## Trigger
 

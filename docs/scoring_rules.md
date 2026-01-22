@@ -23,6 +23,8 @@ Alignment Score = (Matched High × 3 + Matched Med × 2 + Matched Low × 1) / (T
 
 ---
 
+> **Constraint**: Do not target a specific number of keywords (e.g., 7 High, 4 Med). The number of keywords should reflect the complexity of the JD. A complex JD might have 15 High keywords; a simple one might have 5.
+
 ## Keyword Priority Definitions
 
 ### 🔴 High Priority — Must integrate if missing
@@ -84,70 +86,53 @@ Use these categories to label each keyword:
 
 ## Integration Rules
 
-### Rule 0: Semantic Fit Check (GATE)
+### Rule 0: Semantic Fit Check (The "Translation vs. Fabrication" Gate)
 
-**Before suggesting ANY keyword integration, ask:**
+**Before suggesting ANY keyword integration, apply this framework:**
 
-> "Does this keyword describe something the candidate _actually did_ in that role, even if phrased differently?"
+#### ✅ Safe Translation (Allowed)
 
-If NO → **Do not integrate.** Mark as `~~keyword~~ _no semantic fit_` and skip.
+You can rename a _process_, _skill_, or _methodology_ using JD terminology if the underlying activity is fundamentally the same.
 
-**Semantic fit means:**
+- _Ex:_ "User research" → "Discovery"
+- _Ex:_ "Algorithmic development" → "Model tuning"
+- _Ex:_ "Stakeholder alignment" → "Cross-functional collaboration"
 
-- The keyword describes the _same type of work_, not just similar-sounding words
-- Adding the keyword doesn't change _what the bullet claims you did_
-- A hiring manager reading both versions would understand them as the same accomplishment
+#### ❌ Unsafe Fabrication (BANNED)
 
-**Examples of BAD semantic fit:**
+You CANNOT change the **Business Model**, **Domain**, or **Core Product Type**.
 
-| Original                             | Keyword                    | Why It Fails                                                 |
-| ------------------------------------ | -------------------------- | ------------------------------------------------------------ |
-| "Built a smart recorder OS"          | **content curation**       | Recorder captures audio, doesn't curate content from sources |
-| "Integrated with Uber, Spotify apps" | **third-party content**    | Apps ≠ content publishers/news sources                       |
-| "Optimized onboarding funnel"        | **recommendation systems** | Funnel optimization ≠ ML-based content ranking               |
-| "Conducted user research"            | **quality signals**        | Research methods ≠ content trustworthiness signals           |
+- _Ex:_ "Smart Recorder (Hardware)" → "Call Automation (SaaS)" (Mismatch: Product Type)
+- _Ex:_ "Consumer App" → "B2B Platform" (Mismatch: Business Model)
+- _Ex:_ "Mobile Game" → "Enterprise Software" (Mismatch: Domain)
 
-**Examples of GOOD semantic fit:**
-
-| Original                        | Keyword              | Why It Works                        |
-| ------------------------------- | -------------------- | ----------------------------------- |
-| "Deployed LLMs through APIs"    | **Generative AI**    | Same technology, different phrasing |
-| "Aligned 8+ stakeholders"       | **cross-functional** | Same collaboration, JD terminology  |
-| "Created go-to-market strategy" | **GTM strategy**     | Exact same deliverable              |
-
-**When semantic fit fails for most High-priority keywords:**
-
-- Warn user: `⚠️ Low semantic fit (~X%). This role may not be a strong match.`
-- Suggest skipping or applying minimal transferable-skill edits only
+**If Unsafe Fabrication detected:**
+Do not integrate. Suggest "Bridging" (Rule 1) or skip entirely.
 
 ---
 
-### Rule 1: Fact Flexibility by Priority
+### Rule 1: Fact Flexibility ("Bridging" instead of "Claiming")
 
 **Default behavior**: Rephrase existing facts using JD terminology without inventing new claims.
 
-**Exception for 🔴 High Priority keywords**: When a High priority requirement is missing and critical for ATS passage, you may **strategically embellish** metrics, experiences, or accomplishments — provided they:
+**For 🔴 High Priority keywords with imperfect fit:**
+Use **Bridging Phrases** to connect existing experience to the keyword without claiming direct ownership if it doesn't exist.
 
-1. **Pass Rule 0** — semantic fit check must be satisfied first
-2. **Look plausible** given the candidate's background
-3. **Are relevant** to the actual work performed
-4. **Cannot be easily disproved** in an interview
-5. **Enhance rather than fabricate** — stretch existing experience, don't invent from scratch
-6. **NEVER fabricate domain expertise** — Do not add specific clinical conditions (e.g., "metabolic health", "cardiology"), niche industries, or technical certifications (e.g., "FDA compliance") if not in the candidate's background. Focus on **Methodology Alignment** instead.
+- **Instead of:** "Built [Keyword]" (when you didn't)
+- **Use:** "Applied [Skill] _relevant to_ [Keyword]" or "experience _aligned with_ [Keyword]"
 
-| Priority | Invention Allowed?   | Guidance                                            |
-| -------- | -------------------- | --------------------------------------------------- |
-| 🔴 High  | ✅ Yes, if plausible | Stretch existing experience to match JD terminology |
-| 🟠 Med   | ⚠️ Minimal           | Only rephrase, don't add new claims                 |
-| 🟢 Low   | ❌ No                | Preserve original facts exactly                     |
+| Priority | Strategy        | Guidance                                                                      |
+| -------- | --------------- | ----------------------------------------------------------------------------- |
+| 🔴 High  | **Bridging**    | Use "relevant to", "aligned with", "context of" to capture keyword defensibly |
+| 🟠 Med   | **Translation** | Only direct synonyms allowed                                                  |
+| 🟢 Low   | **Strict**      | Preserve original facts exactly                                               |
 
-**Examples**:
+**Fabrication Checks:**
+❌ **Wrong:** Claiming "B2B SaaS experience" when you only worked on B2C.
+✅ **Right (Bridging):** "Launched data products _applicable to_ B2B SaaS contexts..."
 
-❌ Wrong: Adding "robotics experience" when you've never touched robotics  
-✅ Right: Rephrasing "IoT device development" → "embedded systems and robotics-adjacent development"
-
-❌ Wrong: Claiming "FDA regulatory experience" with no exposure  
-✅ Right: Expanding "worked with legal/compliance teams" → "ensured compliance with regulatory requirements"
+❌ **Wrong:** Claiming "FDA regulatory experience" with no exposure.
+✅ **Right (Bridging):** "Ensured compliance _aligned with_ regulatory standards..."
 
 ---
 
@@ -191,6 +176,19 @@ Use the **exact phrasing** from the JD when possible.
 | "voice of customer"        | "voice of customer" (not "customer feedback")     |
 | "new product introduction" | "new product introduction" (not "product launch") |
 | "cross-functional"         | "cross-functional" (not "interdisciplinary")      |
+
+---
+
+### Rule 6: Core Entity Preservation
+
+**NEVER delete the specific name of the feature, product, or metric you built to make room for a keyword.**
+
+The keyword must _modify_ or _contextualize_ the entity, not replace it.
+
+- ❌ **Bad:** "Optimized data pipelines..." (Deleted "recording scenes")
+- ✅ **Good:** "Optimized algorithms _for recording scenes_..."
+- ❌ **Bad:** "Launched B2B platform..." (Deleted "Smart Recorder")
+- ✅ **Good:** "Launched Smart Recorder _with B2B platform integrations_..."
 
 ## Gap Analysis Output Format
 

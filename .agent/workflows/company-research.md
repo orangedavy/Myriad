@@ -11,7 +11,7 @@ Conduct deep research on a target company to prepare for interviews. This is the
 - Persona directory at `personas/{persona}/`
   - Master resume: `{persona}_{role}_master_resume.typ`
   - Career profile: `{persona}_career_profile.md` (optional)
-- Default persona: `davy` with role `pm`
+- Default persona: Varies (set via `/persona-switch`)
 
 ## Workflow Steps
 
@@ -184,7 +184,7 @@ EOF
 
 **Role:** Executive Career Coach
 
-**Input:** Read `typst/master_resume.typ` for candidate background.
+**Input:** Read `personas/{persona}/{persona}_{role}_master_resume.typ` for candidate background.
 
 **Output Structure:**
 
@@ -198,15 +198,7 @@ EOF
 **Risk:** [gap]
 ```
 
-**ATS Keywords** — Strict Markdown Table. Columns: Priority | Keyword | Category | Match.
-Format for Match column: Use `✔` for match, `✘` for missing.
-Format for Priority column: `🔴 High`, `🟠 Med`, `🟢 Low`.
-
-```markdown
-| Priority | Keyword     | Category | Match |
-| :------- | :---------- | :------- | :---: |
-| 🔴 High  | **keyword** | Skill    |   ✔   |
-```
+**ATS Keywords** — Table: Priority | Keyword | Category | ✔/✘
 
 **Key Requirements** — Top 5 numbered, with business rationale in italics
 

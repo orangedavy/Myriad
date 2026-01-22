@@ -19,7 +19,7 @@ This workflow helps you tailor your resume for a specific job posting using Gemi
 
 ## Default Persona
 
-Default: `davy` with role `pm` → `personas/davy/davy_pm_master_resume.typ`
+Default: Varies (set via `/persona-switch`)
 
 ## Workflow Steps
 
@@ -79,6 +79,8 @@ Extract silently and **save to log file** `output/{PERSONA}/resume-analysis/{Com
 3. **Top 5 Requirements**: Non-negotiable qualifications only
 4. **Nice-to-haves**: Explicitly stated as preferred/bonus
 
+**Constraint**: Do NOT artificially limit the number of keywords (e.g. to 7 High/4 Med). Extract ALL keywords that materially impact ATS ranking. A typical list might have 10-20 High, 5-10 Med, and 5-10 Low.
+
 // turbo
 
 ```bash
@@ -125,11 +127,19 @@ Present this analysis to the user — this is the **first output they see**.
 
 **Follow `docs/scoring_rules.md` for all edit rules:**
 
-- **Rule 1**: Fact Flexibility — may embellish for 🔴 High priority only
+- **Rule 0**: Translation Allowed, Fabrication BANNED (Do not change domain/product type)
+- **Rule 1**: Fact Flexibility — use "Bridging" phrases for High priority keywords
 - **Rule 2**: ±10% character length constraint
 - **Rule 3**: Prioritize High → Med → Low
 - **Rule 4**: One keyword per bullet
 - **Rule 5**: Match JD terminology exactly
+- **Rule 6**: Core Entity Preservation — NEVER delete feature names
+
+**Negative Constraints:**
+
+- ❌ Do not invent B2B SaaS experience if only B2C exists.
+- ❌ Do not rename hardware products to software platforms.
+- ❌ Do not delete specific feature names (e.g., "recording scenes") to make space.
 
 Format using diff style (see `docs/scoring_rules.md` § Edit Suggestion Output Format):
 
@@ -258,16 +268,16 @@ Notify user with confirmation:
 
 Variables:
 
-- `{PERSONA}` = selected persona (e.g., davy)
+- `{PERSONA}` = selected persona (e.g., alex)
 - `{COMPANY}` = from JD analysis
 - `{JOBROLE}` = from JD analysis (e.g., Product Manager)
-- `{NAME}` = from config.yaml (e.g., Shucheng Guo)
+- `{NAME}` = from config.yaml (e.g., Alex Chen)
 
 Examples:
 
-- `EnsoData_Product Manager_Shucheng Guo.pdf`
-- `Google_AI PM_Shucheng Guo.pdf`
-- `Globus Medical_Product Manager_Shucheng Guo.pdf`
+- `EnsoData_Product Manager_Alex Chen.pdf`
+- `Google_AI PM_Alex Chen.pdf`
+- `Globus Medical_Product Manager_Alex Chen.pdf`
 
 ---
 
@@ -284,10 +294,10 @@ If user selects autonomous mode, execute Steps 2-8 without pausing for approval:
 7. Notify user with single message:
 
 ```
-✅ Resume generated: Company_Role_Shucheng Guo.pdf
+✅ Resume generated: Company_Role_Alex Chen.pdf
 
-Alignment: 🎯 ████████░░ 75% Good
-Edits applied: 3 (medical device, Jira, cross-functional)
+Alignment: 🎯 ██████░░░░ 64% Fair
+Edits applied: 5 (medical device, Jira, cross-functional, FDA, ISO 13485)
 ```
 
 ---
@@ -331,7 +341,7 @@ for jd in jd_files/*.txt; do
   company=$(basename "$jd" .txt)
   cp typst/master_resume.typ typst/temp_customized.typ
   # Apply edits...
-  typst compile typst/temp_customized.typ "output/resumes/${company}_Shucheng Guo.pdf"
+  typst compile typst/temp_customized.typ "output/resumes/${company}_Alex Chen.pdf"
   rm typst/temp_customized.typ
 done
 ```
@@ -357,7 +367,7 @@ User: [pastes JD]
 
 Agent: ## Gap Analysis: Google
 
-🎯 ████████░░ **78%** Good (2 edits)
+🎯 ██████████ **82%** Good (1 edit)
 
 ### ✓ Matched Keywords
 `LLM` · `cross-functional` · `roadmap` · `product management`

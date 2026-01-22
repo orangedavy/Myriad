@@ -11,7 +11,7 @@ Prepare tailored interview scripts for initial screen interviews. Requires `/com
 - Persona directory at `personas/{persona}/`
   - Career profile: `{persona}_career_profile.md` (optional — story features limited if missing)
 - Company research at `output/company-research/{Company}/`
-- Default persona: `davy`
+- Default persona: Varies (set via `/persona-switch`)
 
 ## Workflow Steps
 
@@ -109,7 +109,7 @@ Keep static parts unchanged. Bold all customizations. ~80% fixed, ~20% company-s
 
 1. **[Summary]:** Start with the "Company mission/vision" summary paragraph from `Career_Profile.md` (under "Why do you choose our company?"). Customize the bracketed `[specific example]` with your Hook.
 
-2. **[Experience]:** Specific experiences relevant to role. Use fixed statements about dialysis project and smart recorder.
+2. **[Experience]:** Specific experiences relevant to role. Use fixed statements about relevant projects from resume.
 
 3. **[Mission]:** Company mission + personal connection. Include compelling stat if available (e.g., "54M Americans have sleep apnea, 80% undiagnosed").
 
