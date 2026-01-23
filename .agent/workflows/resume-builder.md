@@ -195,51 +195,26 @@ Apply approved changes to `typst/temp_customized.typ` only. Master remains untou
   \`\`\`
 ```
 
-### Step 6.5: Page Count Validation
+### Step 6.5: Validation (Page Count & Runts)
 
-Before final compile, verify the resume fits on one page:
+Before final compile, run the automated validator:
 
 // turbo
 
 ```bash
 cd .
 typst compile personas/{PERSONA}/temp_customized.typ /tmp/resume_check.pdf
-PAGE_COUNT=$(.venv/bin/python -c "import fitz; print(len(fitz.open('/tmp/resume_check.pdf')))")
-if [ "$PAGE_COUNT" -gt 1 ]; then
-  echo "⚠️ Overflow detected ($PAGE_COUNT pages). Trimming required."
-  rm personas/{PERSONA}/temp_customized.typ /tmp/resume_check.pdf
+.venv/bin/python -m backend.validate /tmp/resume_check.pdf
+if [ $? -ne 0 ]; then
+  echo "❌ Validation failed. Aborting."
+  # Optional: Cleanup if you want, or keep for debugging
+  # rm personas/{PERSONA}/temp_customized.typ /tmp/resume_check.pdf
   exit 1
 fi
 rm /tmp/resume_check.pdf
 ```
 
-If validation fails, abort and suggest specific bullets to shorten.
-
-### Step 6.6: Runt/Orphan Validation
-
-After page count check, verify no "runts" (dangling short words) exist.
-
-// turbo
-
-```bash
-cd .
-RUNTS=$(.venv/bin/python -c "from backend.monitor import detect_runts; import json; print(json.dumps(detect_runts('/tmp/resume_check.pdf')))")
-if [ "$RUNTS" != "[]" ]; then
-  echo "⚠️ Runts detected!"
-  echo "$RUNTS" | jq -r '.[] | "- Page \(.page): \"\(.text)\""'
-
-  # Auto-fix attempt
-  echo "🔄 Attempting auto-fix..."
-  FIXES=$(.venv/bin/python -c "from backend.fixer import fix_runts; import json, sys; runts=json.loads(sys.argv[1]); print(json.dumps(fix_runts(runts)))" "$RUNTS")
-
-  # Apply fixes to the temp file (complex sed/replacement needed, or simpler: just notify user for now in manual mode)
-  # For MVP: We show the suggested fixes
-  echo "💡 Suggested changes:"
-  echo "$FIXES" | jq -r 'to_entries[] | "Change: \(.key)\nTo:     \(.value)\n"'
-
-  # TODO: Implement auto-apply logic by matching strings in the .typ file
-fi
-```
+If validation fails, the script will exit with code 1, stopping the workflow. You must shorten bullets.
 
 ### Step 7: Compile & Cleanup
 
