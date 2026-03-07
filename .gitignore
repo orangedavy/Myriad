@@ -8,15 +8,5 @@ __pycache__/
 
 # IDE
 *.code-workspace
-
-# Output (all generated content)
-output/
-
-# Personas (contain PII)
-personas/
-!personas/.gitkeep
-
-# Persona State
-.current_persona
-
-
+.prettierrc
+.venv

@@ -190,6 +190,17 @@ The keyword must _modify_ or _contextualize_ the entity, not replace it.
 - ❌ **Bad:** "Launched B2B platform..." (Deleted "Smart Recorder")
 - ✅ **Good:** "Launched Smart Recorder _with B2B platform integrations_..."
 
+---
+
+### Rule 7: Strategic Bolding
+
+Do NOT bold keywords just because you inserted them. This looks suspicious and stuffed. Only bold text if it is a **critical metric** (e.g., **\$1.5B** revenue) or the **primary entity** of the resume (e.g., product name).
+
+- ❌ **Bad:** Launched **AI video tools** for **creators** in the **creator economy**...
+- ✅ **Good:** Launched AI video tools for creators in the creator economy...
+
+---
+
 ## Gap Analysis Output Format
 
 ```markdown

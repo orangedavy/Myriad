@@ -40,7 +40,7 @@ echo "Using: $PERSONA ($ROLE)"
 
 ```bash
 read PERSONA ROLE < .current_persona
-if [ ! -f "personas/$PERSONA/${PERSONA}_${ROLE}_master_resume.typ" ]; then
+if [ ! -f "personas/$PERSONA/$$PERSONA_$$ROLE_master_resume.typ" ]; then
   echo "❌ Resume not found. Run /persona-switch to set persona."
   exit 1
 fi
@@ -72,7 +72,7 @@ Otherwise, default to Manual Review.
 
 **Follow the methodology in `docs/training_reference.md` exactly.**
 
-Extract silently and **save to log file** `output/{PERSONA}/resume-analysis/{Company}_analysis.md`:
+Extract silently and **save to log file** `output/$PERSONA/resume-analysis/{Company}_analysis.md`:
 
 1. **Job Metadata**: Role, Company, Location, Seniority, Role Type, Salary
 2. **ATS Keywords**: Prioritized as 🔴 High, 🟠 Medium, 🟢 Low with category labels
@@ -94,7 +94,7 @@ mkdir -p "output/$PERSONA/resume-analysis"
 
 **Follow the scoring formula in `docs/scoring_rules.md`.**
 
-Compare extracted requirements against `personas/{PERSONA}/{PERSONA}_{ROLE}_master_resume.typ`:
+Compare extracted requirements against `personas/$PERSONA/$PERSONA_$ROLE_master_resume.typ`:
 
 - **Matched Keywords**: Inline list with backticks
 - **Missing Keywords**: Table with **4 columns**: `Priority` (Emoji), `Keyword`, `Category`, `Integration`
@@ -168,7 +168,7 @@ Create a temporary copy, apply edits, export PDF, then delete the temp file.
 
 ```bash
 cd .
-cp personas/{PERSONA}/{PERSONA}_{ROLE}_master_resume.typ personas/{PERSONA}/temp_customized.typ
+cp personas/$PERSONA/$PERSONA_$ROLE_master_resume.typ personas/$PERSONA/temp_customized.typ
 ```
 
 Apply approved changes to `typst/temp_customized.typ` only. Master remains untouched.
@@ -203,12 +203,12 @@ Before final compile, run the automated validator:
 
 ```bash
 cd .
-typst compile personas/{PERSONA}/temp_customized.typ /tmp/resume_check.pdf
+typst compile personas/$PERSONA/temp_customized.typ /tmp/resume_check.pdf
 .venv/bin/python -m backend.validate /tmp/resume_check.pdf
 if [ $? -ne 0 ]; then
   echo "❌ Validation failed. Aborting."
   # Optional: Cleanup if you want, or keep for debugging
-  # rm personas/{PERSONA}/temp_customized.typ /tmp/resume_check.pdf
+  # rm personas/$PERSONA/temp_customized.typ /tmp/resume_check.pdf
   exit 1
 fi
 rm /tmp/resume_check.pdf
@@ -222,7 +222,7 @@ If validation fails, the script will exit with code 1, stopping the workflow. Yo
 
 ```bash
 cd .
-typst compile personas/{PERSONA}/temp_customized.typ "output/{PERSONA}/resumes/{COMPANY}_{JOBROLE}_{NAME}.pdf"
+typst compile personas/$PERSONA/temp_customized.typ "output/$PERSONA/resumes/_{COMPANY}__{JOBROLE}__{NAME}.pdf"
 ```
 
 **Do not auto-open PDF.** After compile, immediately cleanup:
@@ -230,23 +230,23 @@ typst compile personas/{PERSONA}/temp_customized.typ "output/{PERSONA}/resumes/{
 // turbo
 
 ```bash
-rm "personas/{PERSONA}/temp_customized.typ"
+rm "personas/$PERSONA/temp_customized.typ"
 ```
 
 Notify user with confirmation:
 
 ```
-✅ Resume saved: output/{PERSONA}/resumes/{COMPANY}_{JOBROLE}_{NAME}.pdf
+✅ Resume saved: output/$PERSONA/resumes/_{COMPANY}__{JOBROLE}__{NAME}.pdf
 ```
 
-**Naming convention**: `{COMPANY}_{JOBROLE}_{NAME}.pdf`
+**Naming convention**: `_{COMPANY}__{JOBROLE}__{NAME}.pdf`
 
 Variables:
 
-- `{PERSONA}` = selected persona (e.g., alex)
-- `{COMPANY}` = from JD analysis
-- `{JOBROLE}` = from JD analysis (e.g., Product Manager)
-- `{NAME}` = from config.yaml (e.g., Alex Chen)
+- `$PERSONA` = selected persona (e.g., alex)
+- `_{COMPANY}` = from JD analysis
+- `_{JOBROLE}` = from JD analysis (e.g., Product Manager)
+- `_{NAME}` = from config.yaml (e.g., Alex Chen)
 
 Examples:
 
